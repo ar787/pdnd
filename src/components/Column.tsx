@@ -35,7 +35,7 @@ function Column({column}: ColumnProps) {
             <p style={{textAlign: 'left'}}>{column.name}</p>
                 <ul style={scrollableContainerStyle}>
                     {column.cards.map((card, index) =>
-                        <Card  key={index} card={card}/>
+                        <Card key={index} card={card} position={index}/>
                     )}
                 </ul>
         </div>

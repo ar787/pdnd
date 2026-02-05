@@ -18,9 +18,9 @@ export type Board = {
 
 export type BoardContextType = {
     board: Board;
-    // moveCard: (
-    //     id: string,
-    //     targetColumnId: string,
-    //     targetPosition: number
-    // ) => void;
+    moveCard: (
+        id: string,
+        targetColumnId: string,
+        targetPosition: number
+    ) => void;
 };
