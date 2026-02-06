@@ -27,7 +27,9 @@ const cardDragStyle = {
 }
 function Card({card, position} : CardProps) {
     const [dragging, setDragging] = useState<boolean>(false);
+    const [aboutToDrop, setAboutToDrop] = useState<boolean>(false);
     const ref = useRef<HTMLLIElement>(null);
+
     const { moveCard } = useBoard()
 
     useEffect(() => {
@@ -42,8 +44,14 @@ function Card({card, position} : CardProps) {
         }),
         dropTargetForElements({
             element,
+            canDrop: ({source}) => {
+                return source.data.id !== card.id;
+            },
             getData: () => card,
+            onDragEnter: () => setAboutToDrop(true),
+            onDragLeave: () => setAboutToDrop(false),
             onDrop: ({source, self}) => {
+                setAboutToDrop(false);
                 moveCard(source.data.id as string, self.data.columnId as string, position)
             }
         })
@@ -51,7 +59,7 @@ function Card({card, position} : CardProps) {
     }, [card, moveCard, position])
 
     return (
-        <li ref={ref} style={dragging ? cardDragStyle : cardStyle}>
+        <li ref={ref} style={dragging ? cardDragStyle : aboutToDrop ? {...commonCardStyle, backgroundColor: 'green'} : cardStyle}>
             <span>{card.id}</span>
             <span>{card.title}</span>
         </li>
